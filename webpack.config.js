@@ -12,7 +12,9 @@ module.exports = {
     // 打包后路径
     path: path.resolve(__dirname, './dist'),
     // 每次打包后清除原文件
-    clean: true
+    clean: true,
+    // 静态资源文件名
+    assetModuleFilename: 'images/[contenthash][ext]'
   },
   // source-map定位错误信息
   devtool: 'inline-source-map',
@@ -26,5 +28,29 @@ module.exports = {
   ],
   devServer: {
     static: './dist'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.png$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[contenthash][ext]'
+        }
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset/inline'
+      },
+      {
+        test: /\.txt$/,
+        type: 'asset/source'
+      },
+      // 通用资源类型，在导出一个data URI和发送一个单独的文件之间自动选择 asset
+      {
+        test: /\.jpg$/,
+        type: 'asset'
+      }
+    ]
   }
 }
