@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   // 模式
@@ -24,7 +25,8 @@ module.exports = {
       template: './index.html',
       // script插入的位置
       inject: 'body'
-    })
+    }),
+    new MiniCssExtractPlugin()
   ],
   devServer: {
     static: './dist'
@@ -49,7 +51,17 @@ module.exports = {
       // 通用资源类型，在导出一个data URI和发送一个单独的文件之间自动选择 asset
       {
         test: /\.jpg$/,
-        type: 'asset'
+        type: 'asset',
+        parser: {
+          // 图片maxSize 资源或base64
+          dataUrlCondition: {
+            maxSize: 4 * 1024 * 1024
+          }
+        }
+      },
+      {
+        test: /\.(css|less)$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
       }
     ]
   }
