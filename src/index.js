@@ -5,6 +5,11 @@ import txt from './assets/example.txt'
 import jpgSrc from './assets/2.jpg'
 import './style.css'
 import './style.less'
+import Data from './assets/data.xml'
+import Notes from './assets/data.csv'
+import DataToml from './assets/data.toml'
+import DataYaml from './assets/data.yaml'
+import DataJson5 from './assets/data.json5'
 
 const img = document.createElement('img')
 img.src = pngSrc
@@ -17,6 +22,7 @@ document.body.appendChild(img2)
 
 const block = document.createElement('div')
 block.style.cssText = 'width: 200px; height: 200px; background: aliceblue'
+block.classList.add('block-bg')
 block.textContent = txt
 document.body.appendChild(block)
 
@@ -26,5 +32,16 @@ img3.src = jpgSrc
 document.body.appendChild(img3)
 
 document.body.classList.add('hello')
+
+const span = document.createElement('span')
+span.classList.add('icon')
+span.innerHTML = '测试字体'
+document.body.appendChild(span)
+
+console.log(Data)
+console.log(Notes)
+console.log(DataToml)
+console.log(DataYaml)
+console.log(DataJson5)
 
 hello()

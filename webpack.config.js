@@ -1,6 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const toml = require('toml')
+const yaml = require('yaml')
+const json5 = require('json5')
 
 module.exports = {
   // 模式
@@ -26,7 +30,9 @@ module.exports = {
       // script插入的位置
       inject: 'body'
     }),
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin({
+      filename: 'styles/[contenthash].css'
+    })
   ],
   devServer: {
     static: './dist'
@@ -62,7 +68,45 @@ module.exports = {
       {
         test: /\.(css|less)$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        type: 'asset/resource'
+      },
+      {
+        test: /\.(csv|tsv)$/,
+        use: 'csv-loader'
+      },
+      {
+        test: /\.xml$/,
+        use: 'xml-loader'
+      },
+      {
+        test: /\.toml$/,
+        type: 'json',
+        parser: {
+          parse: toml.parse
+        }
+      },
+      {
+        test: /\.yaml$/,
+        type: 'json',
+        parser: {
+          parse: yaml.parse
+        }
+      },
+      {
+        test: /\.json5$/,
+        type: 'json',
+        parser: {
+          parse: json5.parse
+        }
       }
     ]
+  },
+
+  // 优化
+  optimization: {
+    minimizer: [new CssMinimizerPlugin()]
   }
 }
