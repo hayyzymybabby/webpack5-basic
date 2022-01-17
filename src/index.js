@@ -10,6 +10,8 @@ import Notes from './assets/data.csv'
 import DataToml from './assets/data.toml'
 import DataYaml from './assets/data.yaml'
 import DataJson5 from './assets/data.json5'
+import _ from 'lodash'
+import './async-module'
 
 const img = document.createElement('img')
 img.src = pngSrc
@@ -45,3 +47,5 @@ console.log(DataYaml)
 console.log(DataJson5)
 
 hello()
+
+console.log(_.join(['index', 'module', 'loaded!'], ' '))

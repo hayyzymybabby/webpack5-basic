@@ -10,10 +10,22 @@ module.exports = {
   // 模式
   mode: 'development',
   // 入口
-  entry: './src/index.js',
+  entry: {
+    // index: {
+    //   import: './src/index.js',
+    //   dependOn: 'shared'
+    // },
+    // another: {
+    //   import: './src/another-module.js',
+    //   dependOn: 'shared'
+    // },
+    // shared: 'lodash'
+    index: './src/index.js',
+    another: './src/another-module.js'
+  },
   output: {
     // 打包后的文件夹
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     // 打包后路径
     path: path.resolve(__dirname, './dist'),
     // 每次打包后清除原文件
@@ -118,6 +130,9 @@ module.exports = {
 
   // 优化
   optimization: {
-    minimizer: [new CssMinimizerPlugin()]
+    minimizer: [new CssMinimizerPlugin()],
+    splitChunks: {
+      chunks: 'all'
+    }
   }
 }
